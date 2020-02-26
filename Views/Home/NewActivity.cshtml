@@ -1,0 +1,43 @@
+@model DojoActivity
+
+<div class="text-center">
+    <h2>Create an Activity</h2>
+    <form action="/createactivity" method="post">
+    
+        <div class="form-group">
+            <label>Title:</label>
+            <input class="form-control" asp-for="ActivityName">
+            <span asp-validation-for="ActivityName"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Date/ Time:</label>
+            <input class="form-control" asp-for="ActivityDate">
+            <span asp-validation-for="ActivityDate"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Duration:</label>
+            <input class="form-control" asp-for="Duration">
+            <span asp-validation-for="Duration"></span>
+        </div>
+
+        <div class="form-group">
+            <select asp-for="DurationUnit" id="">
+                <option value="Minutes">Minutes</option>
+                <option value="Hours">Hours</option>
+                <option value="Days">Days</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Description:</label>
+            <textarea asp-for="Description" class="form-control" ></textarea>
+            <span asp-validation-for="Duration"></span>
+        </div>
+        <input type="submit" value="CreateActivity">
+
+        
+    
+    </form>
+</div>

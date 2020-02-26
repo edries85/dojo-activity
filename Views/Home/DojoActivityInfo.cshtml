@@ -1,0 +1,55 @@
+@model DojoActivity
+
+<div class="container">
+    <div class="text-center">
+        <h2>@Model.ActivityName</h2>
+    </div>
+    <br>
+    <h3>Event Coordinator:</h3>
+    <p>@Model.Creator.FirstName @Model.Creator.FirstName</p>
+    <br>
+    <h3>Description:</h3>
+    <p>@Model.Description</p>
+    <br>
+    @{
+        if(Model.UserId == ViewBag.CurrentUser.UserId )
+        {
+            <a href="/delete/@Model.DojoActivityId" class="btn btn-danger">Delete</a>
+        }
+        bool RSVP= false;
+        foreach(var g in Model.Guest)
+        {
+            if(g.UserId == ViewBag.CurrentUser.UserId)
+            {
+                RSVP= true;
+            }
+        }
+        if(RSVP == true)
+        
+        {
+            <form action="/unrsvp/@Model.DojoActivityId" method="post">
+                <input type="submit" value="Leave" class="btn btn-warning">   
+            </form>
+        }
+        else
+        {
+            <form action="/rsvp/@Model.DojoActivityId" method="post">
+                <input type="submit" value="Join" class="btn btn-success">
+            </form>
+        }
+            
+        }
+    
+    
+
+    <h3>Participants:</h3>
+    <ul>
+        @{
+            foreach(var w in Model.Guest)
+            {
+                <li>@w.User.FirstName @w.User.LastName</li>
+            }
+        }
+    </ul>
+
+</div>

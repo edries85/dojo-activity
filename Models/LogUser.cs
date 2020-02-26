@@ -1,0 +1,16 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace BeltExam.Models
+{
+    public class LogUser
+    {
+        [Required]
+        [EmailAddress]
+        public string LEmail {get;set;}
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string LPassword {get;set;}
+    }
+}

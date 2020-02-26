@@ -1,0 +1,81 @@
+@model List<DojoActivity>
+    <div class="container">
+        <div class="text-center">
+            <div class="jumbotron">
+                <h1>Dojo Activity Center</h1>
+            </div>
+            <h3>Welcome @ViewBag.CurrentUser.FirstName @ViewBag.CurrentUser.LastName!</h3>
+
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <th>Activity</th>
+                    <th>Date and Time</th>
+                    <th>Duration</th>
+                    <th>Event Coordinator</th>
+                    <th># of Participants</th>
+                    <th>Action</th>
+                </thead>
+                @{
+                    foreach(DojoActivity d in Model)
+                    {
+                        if(d.ActivityDate > DateTime.Today)
+                        {
+                            
+                            <tr>
+                            <td><a href="/dojoactivityinfo/@d.DojoActivityId">@d.ActivityName</a></td>
+                            <td>@d.ActivityDate</td>
+                            <td>@d.Duration @d.DurationUnit</td>
+                            <td>@d.Creator.FirstName @d.Creator.LastName</td>
+                            <td>@d.Guest.Count</td>
+                        @{
+                            if(d.UserId == ViewBag.CurrentUser.UserId)
+                            {
+                                <td><a href="/delete/@d.DojoActivityId" class="btn btn-danger">Delete</a></td>
+                            }
+                        
+                        else
+                        {
+                            bool RSVP= false;
+                            foreach(var g in d.Guest)
+                            {
+                                if(g.UserId == ViewBag.CurrentUser.UserId)
+                                {
+                                    RSVP= true;
+                                }
+                            }
+                            if(RSVP== true)
+                            {
+                                <td>
+                                    <form action="/unrsvp/@d.DojoActivityId" method="post">
+                                        <input type="submit" value="Leave">
+                                    </form>
+                                </td>
+                                
+                            }
+                            else
+                            {
+                                <td>
+                                    <form action="/rsvp/@d.DojoActivityId" method="post">
+                                    <input type="submit" value="Join">
+                                    </form>
+                                </td>
+
+                            }
+                        }
+                    }
+                        </tr>  
+                            
+                        }
+
+                    
+                        
+                    }
+                }
+            </table>
+
+            <a href="/newactivity" class="btn btn-primary">Create Activity</a>
+
+        </div>
+    </div>
+
+    
